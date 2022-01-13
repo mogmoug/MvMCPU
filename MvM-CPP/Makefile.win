@@ -11,8 +11,8 @@ LIBS     =
 INCS     =  
 CXXINCS  =  
 BIN      = MvMCPU.exe
-CXXFLAGS = $(CXXINCS)  -Wall -Wextra -g3 -pipe -D__DEBUG__
-CFLAGS   = $(INCS)  -Wall -Wextra -g3 -pipe -D__DEBUG__
+CXXFLAGS = $(CXXINCS)  -w -g3 -pipe -D__DEBUG__
+CFLAGS   = $(INCS)  -w -g3 -pipe -D__DEBUG__
 RM       = del /q /f
 
 .PHONY: all all-before all-after clean clean-custom
@@ -31,5 +31,5 @@ main.o: main.cpp mcpu.h
 mcpu.o: mcpu.cpp mcpu.h
 	$(CPP) -c E:/work-space/c_cpp-project/MvMCPU/mcpu.cpp -o mcpu.o $(CXXFLAGS)  -finput-charset=gbk -fexec-charset=gbk
 
-mcop.o: mcop.cpp mcpu.h mcop.h
+mcop.o: mcop.cpp
 	$(CPP) -c E:/work-space/c_cpp-project/MvMCPU/mcop.cpp -o mcop.o $(CXXFLAGS) 

@@ -26,7 +26,7 @@ class MCPU {
 		long ACC = 0; //ÀÛ¼ÓÆ÷
 
 		byte registerGroup[64] = {0};
-		byte RAM[4096] = {0};
+		byte RAM[65536] = {0};
 		vector< short> flags;
 		stack< byte> stackBytes;
 		vector< MCommand> CommandRegisterGroup;
