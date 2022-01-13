@@ -1,5 +1,10 @@
 #ifndef MCOP_H
 #define MCOP_H
+#include "mcpu.h"
+struct CompOut {
+	int size;
+	MCommand *p;
+};
 const char* OPCODE[] = {
 	"NOT",//0 空指令
 	"ADD",//1 加法
@@ -12,4 +17,5 @@ const char* OPCODE[] = {
 	"INPUT",//8 输入
 	"OUTPUT"//9 输出
 };
+CompOut compile(char* code);
 #endif

@@ -5,7 +5,12 @@
 #include <stack>
 #define byte signed char
 using namespace std;
-struct MCommand;
+struct MCommand {
+	byte Opcode; //操作码，必须是OPCODE中的，否则报错
+	byte Funcode; //功能码
+	byte Num1; //操作数1
+	byte Num2; //操作数2
+};
 class MCPU {
 	public:
 		MCPU();
@@ -18,7 +23,7 @@ class MCPU {
 		void addCommand(byte opcode, byte funcode, byte num1, byte num2);
 		void runCommands();
 		void runCommand(MCommand mc);
-		void printDebugInfo();
+		void printDebugInfo(int ramin,int ramax);
 
 		int PC = 0; //当前指令执行位置
 		int NOEC = 0; //总共执行过的指令，便于统计

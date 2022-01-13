@@ -3,17 +3,6 @@
 #include "mcpu.h"
 #define byte signed char
 using namespace std;
-
-//LEN = 10
-
-struct MCommand {
-	byte Opcode; //操作码，必须是OPCODE中的，否则报错
-	byte Funcode; //功能码
-	byte Num1; //操作数1
-	byte Num2; //操作数2
-};
-
-
 MCPU::MCPU() {
 	printf("cpu:{\n");
 	CommandRegisterGroup.reserve(0);
@@ -161,12 +150,12 @@ void MCPU::runCommand(MCommand mc) {
 					registerGroup[(int)n1] >>= registerGroup[(int)n2];
 					break;
 				case 3:
-					//或运算
+					//与运算
 					AO = registerGroup[(int)n1] & registerGroup[(int)n2];
 					registerGroup[(int)n1] &= registerGroup[(int)n2];
 					break;
 				case 4:
-					//与运算
+					//或运算
 					AO = registerGroup[(int)n1] | registerGroup[(int)n2];
 					registerGroup[(int)n1] |= registerGroup[(int)n2];
 					break;
@@ -324,10 +313,8 @@ void MCPU::runCommand(MCommand mc) {
 		ACC = 0;
 	}
 }
-void MCPU::printDebugInfo() {
+void MCPU::printDebugInfo(int ramin,int ramax) {
 	//调试信息
-	int min;
-	int max;
 	printf("\
 Debug:{\n\
 PC:%d\n\
@@ -336,15 +323,11 @@ AO:%ld\n\
 RG:\n", PC, NOEC, AO);
 	//把%c改成%d就可以显示数字
 	for (int i = 0; i <= 63; i++) {
-		printf("%c,", registerGroup[i]);
+		printf("%d,", registerGroup[i]);
 	}
 	printf("\nRAM:\n");
-
-	printf("min?,max?");
-	scanf("%d", &min);
-	scanf("%d", &max);
-	for (int i = min; i <= max; i++) {
-		printf("%c,", (unsigned char)RAM[i]);
+	for (int i = ramin; i <= ramax; i++) {
+		printf("%d,", (unsigned char)RAM[i]);
 	}
 	printf("\n");
 }
