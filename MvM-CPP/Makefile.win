@@ -1,0 +1,35 @@
+# Project: MvMCPU
+# Makefile created by Red Panda Dev-C++ beta.0.12.2
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = main.o mcpu.o mcop.o
+LINKOBJ  = main.o mcpu.o mcop.o
+CLEANOBJ  =  main.o mcpu.o mcop.o
+LIBS     = 
+INCS     =  
+CXXINCS  =  
+BIN      = MvMCPU.exe
+CXXFLAGS = $(CXXINCS)  -Wall -Wextra -g3 -pipe -D__DEBUG__
+CFLAGS   = $(INCS)  -Wall -Wextra -g3 -pipe -D__DEBUG__
+RM       = del /q /f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(CLEANOBJ) $(BIN) > NUL 2>&1
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+main.o: main.cpp mcpu.h
+	$(CPP) -c E:/work-space/c_cpp-project/MvMCPU/main.cpp -o main.o $(CXXFLAGS)  -finput-charset=gbk -fexec-charset=gbk
+
+mcpu.o: mcpu.cpp mcpu.h
+	$(CPP) -c E:/work-space/c_cpp-project/MvMCPU/mcpu.cpp -o mcpu.o $(CXXFLAGS)  -finput-charset=gbk -fexec-charset=gbk
+
+mcop.o: mcop.cpp mcpu.h mcop.h
+	$(CPP) -c E:/work-space/c_cpp-project/MvMCPU/mcop.cpp -o mcop.o $(CXXFLAGS) 
