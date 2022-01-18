@@ -1,12 +1,14 @@
 //*********************MVM Core 1.0***************//
 #include <stdio.h>  //基础的IO接口，用来实现MVM基础输入输出
+#include <stdlib.h>
 #include "mcpu.h"
 #define byte signed char
-using namespace std;
 MCPU::MCPU() {
 	printf("cpu:{\n");
-	CommandRegisterGroup.reserve(0);
-	flags.reserve(0);
+	CommandRG = NULL;
+	flags = NULL;
+	nCRG = 0;
+	nflags = 0;
 }
 MCPU::~MCPU() {
 	printf("\n}\n");
@@ -36,16 +38,19 @@ void *MCPU::readData(int p) {
 	return p1;
 }
 void MCPU::addCommand(MCommand mc) {
-	CommandRegisterGroup.push_back(mc);
+	CommandRG = (MCommand*)realloc(CommandRG, ++nCRG);
+	CommandRG[nCRG - 1] = mc;
 }
 
 void MCPU::addCommand(byte opc, byte fun, byte n1, byte n2) {
-	CommandRegisterGroup.push_back({opc, fun, n1, n2});
+	//PUSH指令
+	CommandRG = (MCommand*)realloc(CommandRG, ++nCRG);//扩容
+	CommandRG[nCRG - 1] = {opc, fun, n1, n2}; //赋值
 }
 
 void MCPU::runCommands() {
-	for (PC = 0; PC < (int)(CommandRegisterGroup.size()); PC++) {
-		runCommand(CommandRegisterGroup[PC]);
+	for (PC = 0; PC < (int)(nCRG); PC++) {
+		runCommand(CommandRG[PC]);
 	}
 }
 
@@ -127,7 +132,8 @@ void MCPU::runCommand(MCommand mc) {
 				case 3:
 					//添加标志位为当前位置
 					//加1是为了不让添加标志位的指令重复
-					flags.push_back(PC + 1);
+					flags = (short*)realloc(flags, ++nflags);
+					flags[nflags - 1] = PC + 1;
 					break;
 			}
 			break;
@@ -239,7 +245,8 @@ void MCPU::runCommand(MCommand mc) {
 					break;
 				case 3:
 					//把寄存器n2压入栈顶
-					stackBytes.push(registerGroup[n2]);
+					stackBytes = (byte*)realloc(stackBytes, ++nStack);
+					stackBytes[nStack - 1] = registerGroup[n2];
 					break;
 				case 4:
 					//把累加器设为AO
@@ -268,12 +275,13 @@ void MCPU::runCommand(MCommand mc) {
 					break;
 				case 3:
 					//把栈顶q的值传入寄存器n2并弹出
-					registerGroup[n2] = stackBytes.top();
-					stackBytes.pop();
+					registerGroup[n2] = stackBytes[nStack - 1];
+					stackBytes[nStack - 1] = 0;
+					stackBytes = (byte*)realloc(stackBytes, --nStack);
 					break;
 				case 4:
 					//把栈顶的值传入寄存器n2但不弹出
-					registerGroup[n2] = stackBytes.top();
+					registerGroup[n2] = stackBytes[nStack - 1];
 					break;
 			}
 			break;
@@ -313,7 +321,7 @@ void MCPU::runCommand(MCommand mc) {
 		ACC = 0;
 	}
 }
-void MCPU::printDebugInfo(int ramin,int ramax) {
+void MCPU::printDebugInfo(int ramin, int ramax) {
 	//调试信息
 	printf("\
 Debug:{\n\
@@ -330,4 +338,8 @@ RG:\n", PC, NOEC, AO);
 		printf("%d,", (unsigned char)RAM[i]);
 	}
 	printf("\n");
+	printf("CommandRG:\n");
+	for(int i=0;i<nCRG;i++){
+		printf("o=%d f=%d %d %d\n",CommandRG[i].Opcode,CommandRG[i].Funcode,CommandRG[i].Num1,CommandRG[i].Num2);
+	}
 }

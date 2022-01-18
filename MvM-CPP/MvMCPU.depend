@@ -1,0 +1,27 @@
+# depslib dependency file v1.0
+1642314736 source:e:\work-space\c_cpp-project\mvmcpu\main.cpp
+	<stdio.h>
+	<string.h>
+	"mcpu.h"
+	"mcop.h"
+
+1642221512 e:\work-space\c_cpp-project\mvmcpu\mcpu.h
+	<stdio.h>
+
+1642160920 e:\work-space\c_cpp-project\mvmcpu\mcop.h
+	"mcpu.h"
+
+1642218999 source:e:\work-space\c_cpp-project\mvmcpu\mcop.cpp
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<memory.h>
+	<vector>
+	"mcop.h"
+	"mcpu.h"
+
+1642332391 source:e:\work-space\c_cpp-project\mvmcpu\mcpu.cpp
+	<stdio.h>
+	<stdlib.h>
+	"mcpu.h"
+

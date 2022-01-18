@@ -30,12 +30,12 @@ CommandLine =
 Folders = 
 IncludeVersionInfo = 0
 SupportXPThemes = 0
-CompilerSet = 1
-CompilerSettings = 0000000001000000000001001
+CompilerSet = 4
+CompilerSettings = 0000000000110000000001001
 StaticLink = 0
 AddCharset = 1
 UseUTF8 = 0
-CompilerSetType = 0
+CompilerSetType = 1
 Encoding = AUTO
 
 

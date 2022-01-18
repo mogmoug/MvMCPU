@@ -1,20 +1,20 @@
-//************main.cpp MVM程序测试启动入口**************//
+//************main.cpp**************//
 #include <stdio.h>
+#include <string.h>
 #include "mcpu.h"
 #include "mcop.h"
 int main() {
-	compile("SAVE 0 0 1");
-//	MCPU mcpu1 = MCPU();
-//	char a[] = "Hello,MVM!\n";
-//	mcpu1.writeData(0,11,&a);
-//	//print hello
-//	mcpu1.addCommand(2, 0, 1, 1);//设置寄存器1为-1
-//	mcpu1.addCommand(1,0,1,1);//寄存器1加1
-//	mcpu1.addCommand(7,2,0,2);//把内存AO的值传到寄存器2
-//	mcpu1.addCommand(9,0,2,0);//输出寄存器2的值
-//	mcpu1.addCommand(5,8,0,2);//判断寄存器2的值是否为0
-//	mcpu1.addCommand(3,0,0,0);//跳转到0(不执行0)
-//	mcpu1.runCommands();
-//	mcpu1.printDebugInfo(0,128);
+	MCPU mcpu1 = MCPU();
+	char a[] = "Hello\n";
+	mcpu1.writeData(0, 52, &a);
+//	print hello
+	mcpu1.addCommand(2, 0, 1, 1);//SUBI r1,1
+	mcpu1.addCommand(1, 0, 1, 1); //ADDI r1,1
+	mcpu1.addCommand(7, 2, 0, 2); //LOAD m[AO],r2
+	mcpu1.addCommand(9, 0, 2, 0); //OUTPUT 0,r2
+	mcpu1.addCommand(5, 8, 0, 2); //IFNOTZERO r2
+	mcpu1.addCommand(3, 0, 0, 0); //JMP 0
+	mcpu1.runCommands();
+	mcpu1.printDebugInfo(0, 128);
 	return 0;
 }

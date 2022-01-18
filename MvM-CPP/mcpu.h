@@ -1,10 +1,7 @@
 #ifndef MCPU_H
 #define MCPU_H
 #include <stdio.h>
-#include <vector>
-#include <stack>
 #define byte signed char
-using namespace std;
 struct MCommand {
 	byte Opcode; //操作码，必须是OPCODE中的，否则报错
 	byte Funcode; //功能码
@@ -15,7 +12,7 @@ class MCPU {
 	public:
 		MCPU();
 		~MCPU();
-		void RGwriteData(int p,int size,void* data); //向寄存器写入数据
+		void RGwriteData(int p, int size, void* data); //向寄存器写入数据
 		void writeData(int p, int size, void* data); //写入数据
 		void writeStr(int p, char* str); //写入字符串
 		void *readData(int p);//返回RAM[p]的指针
@@ -23,7 +20,7 @@ class MCPU {
 		void addCommand(byte opcode, byte funcode, byte num1, byte num2);
 		void runCommands();
 		void runCommand(MCommand mc);
-		void printDebugInfo(int ramin,int ramax);
+		void printDebugInfo(int ramin, int ramax);
 
 		int PC = 0; //当前指令执行位置
 		int NOEC = 0; //总共执行过的指令，便于统计
@@ -31,10 +28,13 @@ class MCPU {
 		long ACC = 0; //累加器
 
 		byte registerGroup[64] = {0};
-		byte RAM[65536] = {0};
-		vector< short> flags;
-		stack< byte> stackBytes;
-		vector< MCommand> CommandRegisterGroup;
+		byte RAM[131072] = {0};
+		int nflags;
+		short* flags;
+		int nStack;
+		byte* stackBytes;
+		int nCRG;
+		MCommand* CommandRG;
 		int ROM[1] = {0};
 };
 #endif
