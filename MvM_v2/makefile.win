@@ -1,0 +1,37 @@
+# Project: MvM_v2
+# Makefile created by Red Panda C++ beta.0.13.2
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+RES      = MvM_v2_private.res
+OBJ      = main.o mcpu.o $(RES)
+LINKOBJ  = main.o mcpu.o $(RES)
+CLEANOBJ  =  main.o mcpu.o $(RES)
+LIBS     = 
+INCS     =  
+CXXINCS  =  
+BIN      = MvM_v2.exe
+CXXFLAGS = $(CXXINCS)  -Wall -Wextra -g3 -pipe -D__DEBUG__
+CFLAGS   = $(INCS)  -Wall -Wextra -g3 -pipe -D__DEBUG__
+RM       = del /q /f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(CLEANOBJ) $(BIN) > NUL 2>&1
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+main.o: main.c mcpu.h
+	$(CC) -c E:/work-space/c_cpp-project/MvM_v2/main.c -o main.o $(CFLAGS) 
+
+mcpu.o: mcpu.c mcpu.h
+	$(CC) -c E:/work-space/c_cpp-project/MvM_v2/mcpu.c -o mcpu.o $(CFLAGS) 
+
+MvM_v2_private.res: MvM_v2_private.rc 
+	$(WINDRES) -i MvM_v2_private.rc --input-format=rc -o MvM_v2_private.res -O coff 
+
